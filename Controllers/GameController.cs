@@ -155,5 +155,10 @@ namespace Ecommerce.Controllers
         {
             return _context.Game.Any(e => e.Id == id);
         }
+        
+        public IActionResult Carrello()
+        {
+            return View();
+        }
     }
 }
