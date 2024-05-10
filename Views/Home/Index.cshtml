@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "Home Page";
+    if(HttpContextAccessor?.HttpContext?.Session.GetString("Login")=="si")
+    {
+        <div class="text-center">
+            @HttpContextAccessor?.HttpContext?.Session.GetString("Username")<br>
+            @HttpContextAccessor?.HttpContext?.Session.GetString("Login")
+        </div>
+    }
+}
+
+
