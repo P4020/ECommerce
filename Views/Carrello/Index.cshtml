@@ -1,4 +1,4 @@
-@model IEnumerable<Ecommerce.Models.Game>
+@model IEnumerable<Ecommerce.Models.Carrello>
 
 @{
     ViewData["Title"] = "Index";
@@ -49,8 +49,9 @@
                 @Html.DisplayFor(modelItem => item.Prezzo)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-controller="Carrello" asp-action="Index" asp-route-id="@item.Id">Aggiungi al carrello</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Game" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
