@@ -82,6 +82,10 @@ namespace Ecommerce.Controllers
             }
             return View(game);
         }
+        public IActionResult Home()
+        {
+            return View(_context.Game);
+        }
 
         // POST: Game/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -154,11 +158,6 @@ namespace Ecommerce.Controllers
         private bool GameExists(int id)
         {
             return _context.Game.Any(e => e.Id == id);
-        }
-        
-        public IActionResult Carrello()
-        {
-            return View();
         }
     }
 }

@@ -9,22 +9,22 @@ using Ecommerce.Models;
 
 namespace Ecommerce.Controllers
 {
-    public class UserController : Controller
+    public class CarrelloController : Controller
     {
         private readonly dbContext _context;
 
-        public UserController(dbContext context)
+        public CarrelloController(dbContext context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Carrello
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Carrello.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Carrello/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var carrello = await _context.Carrello
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (carrello == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(carrello);
         }
 
-        // GET: User/Create
+        // GET: Carrello/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Carrello/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Cognome,DataNascita,Username,Email,Password")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Descrizione,DataRilascio,genere,Prezzo")] Carrello carrello)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(carrello);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(carrello);
         }
 
-        // GET: User/Edit/5
+        // GET: Carrello/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var carrello = await _context.Carrello.FindAsync(id);
+            if (carrello == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(carrello);
         }
-        
-        // POST: User/Edit/5
+
+        // POST: Carrello/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Cognome,DataNascita,Username,Email,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descrizione,DataRilascio,genere,Prezzo")] Carrello carrello)
         {
-            if (id != user.Id)
+            if (id != carrello.Id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace Ecommerce.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(carrello);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!CarrelloExists(carrello.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace Ecommerce.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(carrello);
         }
 
-        // GET: User/Delete/5
+        // GET: Carrello/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,62 +123,34 @@ namespace Ecommerce.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var carrello = await _context.Carrello
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (carrello == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(carrello);
         }
-        public IActionResult Login()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public Task<IActionResult> Login( User user)
-        {
-            foreach(var i in _context.User)
-            {    
-                if (i.Username == user.Username && i.Password==user.Password)
-                {
-                    HttpContext.Session.SetString("Username", user.Username);
-                    HttpContext.Session.SetString("Login", "si");
-                    return Task.FromResult<IActionResult>(RedirectToAction("Index","Home"));
-                }
-            
-            }
 
-                ModelState.AddModelError("", "Credenziali non valide");
-                return Task.FromResult<IActionResult>(View());
-            
-        }
-        public IActionResult Logout()
-        {
-            HttpContext.Session.SetString("Username","");
-            HttpContext.Session.SetString("Login", "no");
-            return RedirectToAction("Index","Home");
-        }
-        // POST: User/Delete/5
+        // POST: Carrello/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user != null)
+            var carrello = await _context.Carrello.FindAsync(id);
+            if (carrello != null)
             {
-                _context.User.Remove(user);
+                _context.Carrello.Remove(carrello);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool CarrelloExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Carrello.Any(e => e.Id == id);
         }
     }
 }
