@@ -15,4 +15,6 @@ using Ecommerce.Models;
         public DbSet<Ecommerce.Models.Game> Game { get; set; } = default!;
 
         public DbSet<Ecommerce.Models.User> User { get; set; } = default!;
+
+public DbSet<Ecommerce.Models.Carrello> Carrello { get; set; } = default!;
     }
