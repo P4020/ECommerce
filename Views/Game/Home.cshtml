@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
 @model Microsoft.EntityFrameworkCore.DbSet<Game>
 @{
     ViewData["Title"] = "Home";
@@ -6,7 +8,7 @@
     <h1>Game</h1>
 </header>
 <style>
-        body {
+    body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
@@ -35,10 +37,6 @@
         padding: 1rem;
         text-align: center;
         transition: transform 0.3s;
-    }
-
-    .product-card:hover {
-        transform: scale(1.05);
     }
 
     .product-card img {
@@ -80,11 +78,11 @@
 <div class="product-card">
     @foreach(var Item in Model)
     {
-        <img src="img/@Item.Immagine" alt="@Item.Nome">
+        //<img src="/Img/@Item.Immagine" alt="@Item.Nome">
         <h2>@Item.Nome</h2>
         <p>@Item.Descrizione</p>
         <p class="@Item.Prezzo"></p>
-        <button asp-controller="Carrello" asp-action="Index">Aggiungi al carrello</button>
+        <a asp-controller="Carrello" asp-action="Index"><button>Aggiungi al carrello</button></a> 
         <br><br>
     }
 </div>
